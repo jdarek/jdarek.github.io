@@ -116,8 +116,8 @@
   <section>
     <h2>contact</h2>
     <p class="note" style="margin-bottom:24px">Drop me a line. I usually reply within a few days.</p>
-    <form id="kontakt">
-      <input type="hidden" name="access_key" value="TWOJ-ACCESS-KEY-TUTAJ">
+    <form id="contact-form">
+      <input type="hidden" name="access_key" value="f2e7f03a-1d26-4815-8f44-8f379f14b02c">
       <input type="hidden" name="subject" value="New message from your site">
       <div class="hp" aria-hidden="true">
         <label for="botcheck">Leave this empty</label>
@@ -132,38 +132,38 @@
   </section>
 
   <hr>
-  <footer>© <span id="rok">2026</span> Darek</footer>
+  <footer>© <span id="year">2026</span> Darek</footer>
 
 </div>
 
 <script>
-  document.getElementById('rok').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  var ZDANIE = 'I build software for machines that work outdoors.';
+  var TAGLINE = 'I build software for machines that work outdoors.';
   var el = document.getElementById('typed');
   var cur = el.querySelector('.cursor');
   var txt = document.createTextNode('');
   el.insertBefore(txt, cur);
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    txt.nodeValue = ZDANIE;
+    txt.nodeValue = TAGLINE;
   } else {
     var i = 0;
     (function tick() {
-      if (i <= ZDANIE.length) {
-        txt.nodeValue = ZDANIE.slice(0, i++);
+      if (i <= TAGLINE.length) {
+        txt.nodeValue = TAGLINE.slice(0, i++);
         setTimeout(tick, 45);
       }
     })();
   }
 
-  var form = document.getElementById('kontakt');
-  var status = document.getElementById('status');
+  var form = document.getElementById('contact-form');
+  var statusEl = document.getElementById('status');
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     var btn = form.querySelector('button');
     btn.disabled = true;
-    status.className = 'note'; status.textContent = 'Sending…';
+    statusEl.className = 'note'; statusEl.textContent = 'Sending…';
     try {
       var res = await fetch('https://api.web3forms.com/submit', {
         method:'POST', headers:{ 'Accept':'application/json' }, body:new FormData(form)
@@ -171,10 +171,10 @@
       var data = await res.json();
       if (res.ok && data.success) {
         form.reset();
-        status.className = 'ok'; status.textContent = 'Sent. I will get back to you.';
+        statusEl.className = 'ok'; statusEl.textContent = 'Sent. I will get back to you.';
       } else { throw new Error(data.message || 'Could not send the message.'); }
     } catch (err) {
-      status.className = 'err'; status.textContent = 'Something went wrong: ' + err.message;
+      statusEl.className = 'err'; statusEl.textContent = 'Something went wrong: ' + err.message;
     } finally { btn.disabled = false; }
   });
 </script>
