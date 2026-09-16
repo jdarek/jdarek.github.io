@@ -1,0 +1,4 @@
+# szkice i śmieci lokalne — nic z tego nie ma trafić na serwer
+*.bak
+.DS_Store
+szkice/
